@@ -1,2 +1,8 @@
 <button (click)="startBasicCall()">start call</button>
 <button (click)="leaveCall()">leave call</button>
+<h2>Video in {{ngVersion}}</h2>
+<button id="showVideo" (click)="initVideo($event)" [disabled]="streaming">Open camera</button><br>
+<pre *ngIf="error">
+          {{error | json}}
+        </pre>
+<video #video width="320" height="240"></video>

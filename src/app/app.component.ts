@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import AgoraRTC, { IAgoraRTCClient } from "agora-rtc-sdk-ng"
 
 @Component({
@@ -14,7 +14,50 @@ export class AppComponent {
     localAudioTrack: null,
     localVideoTrack: null,
   };
+  @ViewChild("video") video: ElementRef | undefined;
+  ngVersion: string;
+  streaming = false;
+  error: any;
+  private stream: MediaStream | null = null;
+  private constraints = {
+    audio: false,
+    video: true,
+  };
 
+
+  ngAfterViewInit() {
+  }
+
+  initVideo(e: any) {
+    this.getMediaStream()
+      .then((stream) => {
+        this.stream = stream;
+        this.streaming = true;
+      })
+      .catch((err) => {
+        this.streaming = false;
+        this.error = err.message + " (" + err.name + ":" + err.constraintName + ")";
+      });
+  }
+  private getMediaStream(): Promise<MediaStream> {
+
+    const video_constraints = { video: true };
+    const _video = this.video?this.video.nativeElement:null;
+    return new Promise<MediaStream>((resolve, reject) => {
+      // (get the stream)
+      return navigator.mediaDevices.
+        getUserMedia(video_constraints)
+        .then(stream => {
+          (<any>window).stream = stream; // make variable available to browser console
+          _video.srcObject = stream;
+          // _video.src = window.URL.createObjectURL(stream);
+          _video.onloadedmetadata = function (e: any) { };
+          _video.play();
+          return resolve(stream);
+        })
+        .catch(err => reject(err));
+    });
+  }
    options = {
     // Pass your app ID here.
     appId: "2af7bf1d2bfe4c3c979f7ef08490a513",
