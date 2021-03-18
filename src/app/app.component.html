@@ -1,4 +1,5 @@
-<button (click)="startBasicCall()">start call</button>
+<button (click)="startBasicCall(true)">start call</button>
+<button (click)="startBasicCall(false)">Share</button>
 <button (click)="leaveCall()">leave call</button>
 <h2>Video in {{ngVersion}}</h2>
 <button id="showVideo" (click)="initVideo($event)" [disabled]="streaming">Open camera</button><br>
@@ -7,3 +8,6 @@
         </pre>
 <video #video width="320" height="240"></video>
 <video #video1 width="320" height="240"></video>
+<button id="start">Start capture</button>
+<button id="stop">Stop capture</button>
+<!-- <video id="video" autoplay></video> -->

@@ -21,6 +21,7 @@
     "@angular/router": "~11.0.9",
     "agora-rtc-sdk-ng": "^4.3.0",
     "rxjs": "~6.6.0",
+    "screen-record": "^1.0.1",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },
